@@ -1,10 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>org.wso2</groupId>
+    <artifactId>wso2</artifactId>
+    <version>1.1</version>
+  </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.jcraft</groupId>
+  <groupId>org.wso2.com.jcraft</groupId>
   <artifactId>jsch</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.55</version>
+  <version>0.1.56-SNAPSHOT</version>
   <name>JSch</name>
   <url>http://www.jcraft.com/jsch/</url>
   <description>JSch is a pure Java implementation of SSH2</description>
@@ -13,9 +18,9 @@
     <url>http://www.jcraft.com/</url>
   </organization>
   <scm>
-    <connection>scm:git:http://git.jcraft.com/jsch.git</connection>
-    <developerConnection>scm:git:http://git.jcraft.com/jsch.git</developerConnection>
-    <url>http://git.jcraft.com/jsch.git</url>
+    <connection>scm:git:https://github.com/wso2/wso2-jsch.git</connection>
+    <developerConnection>scm:git:https://github.com/wso2/wso2-jsch.git</developerConnection>
+    <url>https://github.com/wso2/wso2-jsch.git</url>
   </scm>
   <developers>
     <developer>
@@ -65,7 +70,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <target>1.5</target>
+          <source>1.7</source>
+          <target>1.7</target>
         </configuration>
       </plugin>
       <plugin>
@@ -80,21 +86,6 @@
           </execution>
         </executions>
       </plugin>
-<!--
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
--->
     </plugins>
     <extensions>
       <extension>
@@ -104,10 +95,4 @@
       </extension>
     </extensions>
   </build>
-
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>6</version>
-  </parent>
 </project>
