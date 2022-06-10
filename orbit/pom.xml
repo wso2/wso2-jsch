@@ -21,13 +21,13 @@
     <parent>
         <groupId>org.wso2.com.jcraft</groupId>
         <artifactId>jsch-project</artifactId>
-        <version>0.1.55-wso2v2</version>
+        <version>0.1.55-wso2v3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.orbit.com.jcraft</groupId>
     <artifactId>jsch</artifactId>
-    <version>0.1.55-wso2v2</version>
+    <version>0.1.55-wso2v3-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <name>JSch Orbit</name>
     <description>
