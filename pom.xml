@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.wso2.com.jcraft</groupId>
   <artifactId>jsch</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <version>0.1.55-wso2v2-SNAPSHOT</version>
   <name>JSch</name>
   <url>http://www.jcraft.com/jsch/</url>
@@ -95,4 +95,8 @@
       </extension>
     </extensions>
   </build>
+
+  <modules>
+    <module>orbit</module>
+  </modules>
 </project>
