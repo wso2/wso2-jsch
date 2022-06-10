@@ -29,8 +29,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.jcraft.jsch;
 
-import java.util.*;
-
 public class ChannelExec extends ChannelSession{
 
   byte[] command=new byte[0];

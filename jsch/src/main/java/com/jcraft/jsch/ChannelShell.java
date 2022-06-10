@@ -1,6 +1,6 @@
 /* -*-mode:java; c-basic-offset:2; indent-tabs-mode:nil -*- */
 /*
-Copyright (c) 2008-2018 ymnk, JCraft,Inc. All rights reserved.
+Copyright (c) 2002-2018 ymnk, JCraft,Inc. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -27,47 +27,42 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package com.jcraft.jsch.jce;
+package com.jcraft.jsch;
 
-import com.jcraft.jsch.Cipher;
-import javax.crypto.*;
-import javax.crypto.spec.*;
+public class ChannelShell extends ChannelSession{
 
-public class ARCFOUR128 implements Cipher{
-  private static final int ivsize=8;
-  private static final int bsize=16;
-  private static final int skip=1536; 
-  private javax.crypto.Cipher cipher;    
-  public int getIVSize(){return ivsize;} 
-  public int getBlockSize(){return bsize;}
-  public void init(int mode, byte[] key, byte[] iv) throws Exception{
-    byte[] tmp;
-    if(key.length>bsize){
-      tmp=new byte[bsize];
-      System.arraycopy(key, 0, tmp, 0, tmp.length);
-      key=tmp;
-    }
+  ChannelShell(){
+    super();
+    pty=true;
+  }
+
+  public void start() throws JSchException{
+    Session _session=getSession();
     try{
-      cipher=javax.crypto.Cipher.getInstance("RC4");
-      SecretKeySpec _key = new SecretKeySpec(key, "RC4");
-      synchronized(javax.crypto.Cipher.class){
-        cipher.init((mode==ENCRYPT_MODE?
-                     javax.crypto.Cipher.ENCRYPT_MODE:
-                     javax.crypto.Cipher.DECRYPT_MODE),
-                    _key);
-      }
-      byte[] foo=new byte[1];
-      for(int i=0; i<skip; i++){
-        cipher.update(foo, 0, 1, foo, 0);
-      }
+      sendRequests();
+
+      Request request=new RequestShell();
+      request.request(_session, this);
     }
     catch(Exception e){
-      cipher=null;
-      throw e;
+      if(e instanceof JSchException) throw (JSchException)e;
+      if(e instanceof Throwable)
+        throw new JSchException("ChannelShell", (Throwable)e);
+      throw new JSchException("ChannelShell");
+    }
+
+    if(io.in!=null){
+      thread=new Thread(this);
+      thread.setName("Shell for "+_session.host);
+      if(_session.daemon_thread){
+        thread.setDaemon(_session.daemon_thread);
+      }
+      thread.start();
     }
   }
-  public void update(byte[] foo, int s1, int len, byte[] bar, int s2) throws Exception{
-    cipher.update(foo, s1, len, bar, s2);
+
+  void init() throws JSchException {
+    io.setInputStream(getSession().in);
+    io.setOutputStream(getSession().out);
   }
-  public boolean isCBC(){return false; }
 }
