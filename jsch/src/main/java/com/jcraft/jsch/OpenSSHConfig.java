@@ -29,7 +29,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.jcraft.jsch;
 
-import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.FileReader;

@@ -1,6 +1,6 @@
 /* -*-mode:java; c-basic-offset:2; indent-tabs-mode:nil -*- */
 /*
-Copyright (c) 2002-2018 ymnk, JCraft,Inc. All rights reserved.
+Copyright (c) 2006-2018 ymnk, JCraft,Inc. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -27,44 +27,22 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package com.jcraft.jsch;
+package com.jcraft.jsch.jcraft;
 
-import java.util.*;
+public class HMACMD596 extends HMACMD5{
 
-public class ChannelShell extends ChannelSession{
+  private static final String name="hmac-md5-96";
+  private static final int BSIZE=12;
 
-  ChannelShell(){
-    super();
-    pty=true;
+  public int getBlockSize(){return BSIZE;};
+
+  private final byte[] _buf16=new byte[16];
+  public void doFinal(byte[] buf, int offset){
+    super.doFinal(_buf16, 0);
+    System.arraycopy(_buf16, 0, buf, offset, BSIZE);
   }
 
-  public void start() throws JSchException{
-    Session _session=getSession();
-    try{
-      sendRequests();
-
-      Request request=new RequestShell();
-      request.request(_session, this);
-    }
-    catch(Exception e){
-      if(e instanceof JSchException) throw (JSchException)e;
-      if(e instanceof Throwable)
-        throw new JSchException("ChannelShell", (Throwable)e);
-      throw new JSchException("ChannelShell");
-    }
-
-    if(io.in!=null){
-      thread=new Thread(this);
-      thread.setName("Shell for "+_session.host);
-      if(_session.daemon_thread){
-        thread.setDaemon(_session.daemon_thread);
-      }
-      thread.start();
-    }
-  }
-
-  void init() throws JSchException {
-    io.setInputStream(getSession().in);
-    io.setOutputStream(getSession().out);
+  public String getName(){
+    return name;
   }
 }

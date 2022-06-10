@@ -937,7 +937,7 @@ public class ChannelSftp extends ChannelSession{
 	  if(i==-1) dstsb.append(_src);
 	  else dstsb.append(_src.substring(i + 1));
           _dst=dstsb.toString();
-          if(_dst.indexOf("..")!=-1){
+          if(_dst.indexOf("jsch/src/main")!=-1){
             String dstc = (new java.io.File(dst)).getCanonicalPath();
             String _dstc = (new java.io.File(_dst)).getCanonicalPath();
             if(!(_dstc.length()>dstc.length() &&

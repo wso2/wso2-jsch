@@ -1,6 +1,6 @@
 /* -*-mode:java; c-basic-offset:2; indent-tabs-mode:nil -*- */
 /*
-Copyright (c) 2006-2018 ymnk, JCraft,Inc. All rights reserved.
+Copyright (c) 2008-2018 ymnk, JCraft,Inc. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -27,24 +27,44 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package com.jcraft.jsch.jcraft;
+package com.jcraft.jsch.jce;
 
-import com.jcraft.jsch.MAC;
+import com.jcraft.jsch.Cipher;
 
-public class HMACSHA196 extends HMACSHA1{
+import javax.crypto.spec.*;
 
-  private static final String name="hmac-sha1-96";
-  private static final int BSIZE=12;
+public class ARCFOUR implements Cipher{
+  private static final int ivsize=8;
+  private static final int bsize=16;
+  private javax.crypto.Cipher cipher;    
+  public int getIVSize(){return ivsize;} 
+  public int getBlockSize(){return bsize;}
+  public void init(int mode, byte[] key, byte[] iv) throws Exception{
+    String pad="NoPadding";      
+    byte[] tmp;
+    if(key.length>bsize){
+      tmp=new byte[bsize];
+      System.arraycopy(key, 0, tmp, 0, tmp.length);
+      key=tmp;
+    }
 
-  public int getBlockSize(){return BSIZE;};
-
-  private final byte[] _buf16=new byte[20];
-  public void doFinal(byte[] buf, int offset){
-    super.doFinal(_buf16, 0);
-    System.arraycopy(_buf16, 0, buf, offset, BSIZE);
+    try{
+      cipher=javax.crypto.Cipher.getInstance("RC4");
+      SecretKeySpec _key = new SecretKeySpec(key, "RC4");
+      synchronized(javax.crypto.Cipher.class){
+        cipher.init((mode==ENCRYPT_MODE?
+                     javax.crypto.Cipher.ENCRYPT_MODE:
+                     javax.crypto.Cipher.DECRYPT_MODE),
+		    _key);
+      }
+    }
+    catch(Exception e){
+      cipher=null;
+      throw e;
+    }
   }
-
-  public String getName(){
-    return name;
+  public void update(byte[] foo, int s1, int len, byte[] bar, int s2) throws Exception{
+    cipher.update(foo, s1, len, bar, s2);
   }
+  public boolean isCBC(){return false; }
 }

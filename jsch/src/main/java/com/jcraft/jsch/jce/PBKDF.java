@@ -1,6 +1,6 @@
 /* -*-mode:java; c-basic-offset:2; indent-tabs-mode:nil -*- */
 /*
-Copyright (c) 2008-2018 ymnk, JCraft,Inc. All rights reserved.
+Copyright (c) 2013-2018 ymnk, JCraft,Inc. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -29,42 +29,29 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.jcraft.jsch.jce;
 
-import com.jcraft.jsch.Cipher;
-import javax.crypto.*;
-import javax.crypto.spec.*;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.SecretKeyFactory;
+import java.security.spec.InvalidKeySpecException;
+import java.security.NoSuchAlgorithmException;
 
-public class ARCFOUR implements Cipher{
-  private static final int ivsize=8;
-  private static final int bsize=16;
-  private javax.crypto.Cipher cipher;    
-  public int getIVSize(){return ivsize;} 
-  public int getBlockSize(){return bsize;}
-  public void init(int mode, byte[] key, byte[] iv) throws Exception{
-    String pad="NoPadding";      
-    byte[] tmp;
-    if(key.length>bsize){
-      tmp=new byte[bsize];
-      System.arraycopy(key, 0, tmp, 0, tmp.length);
-      key=tmp;
+public class PBKDF implements com.jcraft.jsch.PBKDF{
+  public byte[] getKey(byte[] _pass, byte[] salt, int iterations, int size){
+    char[] pass=new char[_pass.length];
+    for(int i = 0; i < _pass.length; i++){
+      pass[i]=(char)(_pass[i]&0xff);
     }
-
-    try{
-      cipher=javax.crypto.Cipher.getInstance("RC4");
-      SecretKeySpec _key = new SecretKeySpec(key, "RC4");
-      synchronized(javax.crypto.Cipher.class){
-        cipher.init((mode==ENCRYPT_MODE?
-                     javax.crypto.Cipher.ENCRYPT_MODE:
-                     javax.crypto.Cipher.DECRYPT_MODE),
-		    _key);
-      }
+    try {
+      PBEKeySpec spec =
+        new PBEKeySpec(pass, salt, iterations, size*8);
+      SecretKeyFactory skf =
+        SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+      byte[] key = skf.generateSecret(spec).getEncoded();
+      return key;
     }
-    catch(Exception e){
-      cipher=null;
-      throw e;
+    catch(InvalidKeySpecException e){
     }
+    catch(NoSuchAlgorithmException e){
+    }
+    return null;
   }
-  public void update(byte[] foo, int s1, int len, byte[] bar, int s2) throws Exception{
-    cipher.update(foo, s1, len, bar, s2);
-  }
-  public boolean isCBC(){return false; }
 }
