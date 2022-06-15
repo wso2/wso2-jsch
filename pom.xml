@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.wso2</groupId>
         <artifactId>wso2</artifactId>
@@ -9,7 +8,7 @@
     <groupId>org.wso2.com.jcraft</groupId>
     <artifactId>jsch-project</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.55-wso2v4-SNAPSHOT</version>
+    <version>0.1.55-wso2v4</version>
     <name>JSch Project</name>
     <url>http://www.jcraft.com/jsch/</url>
     <description>JSch is a pure Java implementation of SSH2</description>
@@ -21,7 +20,7 @@
         <connection>scm:git:https://github.com/wso2/wso2-jsch.git</connection>
         <developerConnection>scm:git:https://github.com/wso2/wso2-jsch.git</developerConnection>
         <url>https://github.com/wso2/wso2-jsch.git</url>
-        <tag>HEAD</tag>
+        <tag>v0.1.55-wso2v4</tag>
     </scm>
     <developers>
         <developer>
