@@ -2,14 +2,14 @@
     <parent>
         <groupId>org.wso2.com.jcraft</groupId>
         <artifactId>jsch-project</artifactId>
-        <version>0.1.55-wso2v4</version>
+        <version>0.1.55-wso2v5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.com.jcraft</groupId>
     <artifactId>jsch</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.55-wso2v4</version>
+    <version>0.1.55-wso2v5-SNAPSHOT</version>
     <name>JSch</name>
 
     <dependencies>
