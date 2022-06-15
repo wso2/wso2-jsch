@@ -1,16 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.wso2.com.jcraft</groupId>
         <artifactId>jsch-project</artifactId>
-        <version>0.1.55-wso2v4-SNAPSHOT</version>
+        <version>0.1.55-wso2v4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.com.jcraft</groupId>
     <artifactId>jsch</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.55-wso2v4-SNAPSHOT</version>
+    <version>0.1.55-wso2v4</version>
     <name>JSch</name>
 
     <dependencies>
