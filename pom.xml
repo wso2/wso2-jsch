@@ -9,7 +9,7 @@
     <groupId>org.wso2.com.jcraft</groupId>
     <artifactId>jsch-project</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.55-wso2v3-SNAPSHOT</version>
+    <version>0.1.55-wso2v4-SNAPSHOT</version>
     <name>JSch Project</name>
     <url>http://www.jcraft.com/jsch/</url>
     <description>JSch is a pure Java implementation of SSH2</description>
@@ -96,18 +96,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
